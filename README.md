@@ -30,17 +30,17 @@ Note: You can only download small .osm map sections in JOSM because  the Openstr
 5.  List of commands:
 
 In your command line, you can enter these commands:
-
-   python osmpalnodes.py nearest_node_tagged 246512355 $'amenity\': u\'cafe'    #Prints out the cafe nearest to node 246512355   You can enter your own OpenStreetmap node number instead of  246512355. 'cafe' can be replaced with another Openstreetmap amenity such as 'pub', 'restaurant', 'university', 'school', etc.   
+ 
+   python osmpalnodes.py nearest_node_tagged 246512355 $'amenity\': u\'cafe'    #Prints out the cafe nearest to node 246512355   You can enter your own OpenStreetmap node number instead of  246512355. 'cafe' can be replaced with another Openstreetmap amenity such as 'pub', 'restaurant', 'university', 'school', etc.        
    
-   python osmpalnodes.py farthest_node_tagged 246512355 $'amenity\': u\'cafe'    #Prints the cafe farthest from node 246512355 (within the bounding area of the .osm file being used).  
+   python osmpalnodes.py farthest_node_tagged 246512355 $'amenity\': u\'cafe'    #Prints the cafe farthest from node 246512355 (within the bounding area of the .osm file being used).     
    
-   python osmpalnodes.py nearest_node 246512355    #Prints the node (point) that's nearest to node number 246512355.  This node will be any generic node, and will not show the desired tagged node such as cafe, restaurant, etc.  
+   python osmpalnodes.py nearest_node 246512355    #Prints the node (point) that's nearest to node number 246512355.  This node will be any generic node, and will not show the desired tagged node such as cafe, restaurant, etc.    
    
-   python osmpalnodes.py farthest_node 246512355    #Prints the node (point) farthest away from node 246512355.  This node will be any generic node.   
+   python osmpalnodes.py farthest_node 246512355    #Prints the node (point) farthest away from node 246512355.  This node will be any generic node. 
    
    If you want to map out the node that was received, just go to the Openstreetmap website to map out the node. E.G. you entered: python osmpalnodes.py nearest_node_tagged 246512355 $'amenity\': u\'cafe'  and got node # 1740966205 (a Starbucks coffee shop) as the output.  Just go to http://www.openstreetmap.org/node/1740966205  You can also use the JOSM program (from step 4) or the OpenStreetMap website to find other nodes that you want to analyze.  
-
+   
 6.  NOTE: the pyosm.py library file was forked from the repo at https://github.com/werner2101/python-osm, based on original code by Rory McCann (http://blog.technomancy.org/), and Modifications by Christoph Lupprich (http://www.stopbeingcarbon.com), and modifications by Werner Hoch (http://www.h-renrew.de). 
 I added some getitem functions in pyosm.py to make it easier to get the node XML info. 
 
