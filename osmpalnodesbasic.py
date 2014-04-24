@@ -31,7 +31,6 @@ def nearest_node_tagged(nodeID, qry):
         print 'Nearest Distance (not to scale) is: ', nearestDist
         print '\n Nearest Node for your query is http://www.openstreetmap.org/node/'+nearestNode
         print '\n Nearest tagged node is: http://www.openstreetmap.org/node/'+nearestTag
-        graphNodes(X1, Y1, osm.nodes[nearestNode]['lon'], osm.nodes[nearestNode]['lat'], osm.nodes[originalNode]['id'], osm.nodes[nearestNode]['id'], nearestTag)
     except:
         e = sys.exc_info()[0]
         l = sys.exc_traceback.tb_lineno
@@ -57,7 +56,6 @@ def farthest_node_tagged(nodeID, qry):
                 YFAR = osm.nodes[farthestNode]['lat']
         print '\n Farthest Node for your query is node number: ', farthestNode
         print '\n Farthest tagged node is: ', farthestTag
-        graphNodes(X1, Y1, XFAR, YFAR, osm.nodes[originalNode]['id'], osm.nodes[farthestNode]['id'], farthestTag)
     except:
         e = sys.exc_info()[0]
         l = sys.exc_traceback.tb_lineno
@@ -85,7 +83,6 @@ def farthest_node(nodeID):
             print '\n Farthest Distance calculated (not to scale) from your original node is : ', farthestDist
             XFAR = osm.nodes[farthestNode]['lon']
             YFAR = osm.nodes[farthestNode]['lat']
-            graphNodes(X1, Y1, XFAR, YFAR, osm.nodes[originalNode]['id'], osm.nodes[farthestNode]['id'], None)
     except:
         e = sys.exc_info()[0]
         l = sys.exc_traceback.tb_lineno
@@ -112,7 +109,6 @@ def nearest_node(nodeID):
             print '\n Nearest Distance calculated (not to scale): ', nearestDist
             XNEAR = osm.nodes[nearestNode]['lon']
             YNEAR = osm.nodes[nearestNode]['lat']
-            graphNodes(X1, Y1, XNEAR, YNEAR, osm.nodes[originalNode]['id'], osm.nodes[nearestNode]['id'], None)
     except:
         e = sys.exc_info()[0]
         l = sys.exc_traceback.tb_lineno
