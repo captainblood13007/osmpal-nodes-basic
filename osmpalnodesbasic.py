@@ -6,6 +6,8 @@ sys.path.append(PYOSM_DIR)
 import pyosm
 osm = pyosm.OSMXMLFile('ENTER THE LOCATION OF THE OPENSTREETMAP .OSM FILE HERE, e.g. /home/peter/osmpal/new-york-small.osm')
 import re
+sys.path.insert(0, 'ENTER THE LIB DIRECTORY LOCATION. This will be the folder location containing pyosm.py and geocoder.py files , e.g. /home/peter/osmpal/lib/')
+from geocoder import geocode_node
 
 def dist(x1,y1,x2,y2):
     return ((x2-x1)**2+(y2-y1)**2)**0.5
@@ -27,11 +29,13 @@ def nearest_node_tagged(nodeID, qry):
                 nearestNode = Nid
                 nearestTag = match.group(1)
         print 'Nearest Distance (not to scale) is: ', nearestDist
-        print '\n Nearest Node for your query is node number: ', nearestNode
-        print '\n Nearest tagged node is: ', nearestTag
+        print '\n Nearest Node for your query is http://www.openstreetmap.org/node/'+nearestNode
+        print '\n Nearest tagged node is: http://www.openstreetmap.org/node/'+nearestTag
+        graphNodes(X1, Y1, osm.nodes[nearestNode]['lon'], osm.nodes[nearestNode]['lat'], osm.nodes[originalNode]['id'], osm.nodes[nearestNode]['id'], nearestTag)
     except:
         e = sys.exc_info()[0]
-        print 'The following error ocurred: ', e
+        l = sys.exc_traceback.tb_lineno
+        print 'The following error ocurred: ', e, l
 
 def farthest_node_tagged(nodeID, qry):
     try:
@@ -53,9 +57,11 @@ def farthest_node_tagged(nodeID, qry):
                 YFAR = osm.nodes[farthestNode]['lat']
         print '\n Farthest Node for your query is node number: ', farthestNode
         print '\n Farthest tagged node is: ', farthestTag
+        graphNodes(X1, Y1, XFAR, YFAR, osm.nodes[originalNode]['id'], osm.nodes[farthestNode]['id'], farthestTag)
     except:
         e = sys.exc_info()[0]
-        print 'The following error ocurred: ', e
+        l = sys.exc_traceback.tb_lineno
+        print 'The following error ocurred: ', e, l
 
 def farthest_node(nodeID):
     #First loop through to get coordinates
@@ -79,9 +85,11 @@ def farthest_node(nodeID):
             print '\n Farthest Distance calculated (not to scale) from your original node is : ', farthestDist
             XFAR = osm.nodes[farthestNode]['lon']
             YFAR = osm.nodes[farthestNode]['lat']
+            graphNodes(X1, Y1, XFAR, YFAR, osm.nodes[originalNode]['id'], osm.nodes[farthestNode]['id'], None)
     except:
         e = sys.exc_info()[0]
-        print 'The following error ocurred: ', e
+        l = sys.exc_traceback.tb_lineno
+        print 'The following error ocurred: ', e, l
 
 def nearest_node(nodeID):
     #Need to loop through to get coordinates
@@ -104,18 +112,26 @@ def nearest_node(nodeID):
             print '\n Nearest Distance calculated (not to scale): ', nearestDist
             XNEAR = osm.nodes[nearestNode]['lon']
             YNEAR = osm.nodes[nearestNode]['lat']
+            graphNodes(X1, Y1, XNEAR, YNEAR, osm.nodes[originalNode]['id'], osm.nodes[nearestNode]['id'], None)
     except:
         e = sys.exc_info()[0]
-        print 'The following error ocurred: ', e
+        l = sys.exc_traceback.tb_lineno
+        print 'The following error ocurred: ', e, l
 
 #Allow user to choose the function in command line
-# e.g. python osmpalnodesbasic.py nearest_node_tagged 26301254 $'amenity\': u\'cafe'
+# e.g. python osmpalnodesgraph.py nearest_node_tagged 26301254 $'amenity\': u\'cafe'
 if __name__ == "__main__":
+    #If user input is not a digit, run geocoder function
+    if not sys.argv[2].isdigit():
+        node = geocode_node(sys.argv[2])
+    #Take user entered node number and run one of the functions below
+    else:
+        node = int(sys.argv[2])
     if sys.argv[1] == 'nearest_node_tagged':
-        nearest_node_tagged(int(sys.argv[2]), sys.argv[3])
+        nearest_node_tagged(node, sys.argv[3])
     elif sys.argv[1] == 'farthest_node_tagged':
-        farthest_node_tagged(int(sys.argv[2]), sys.argv[3])
+        farthest_node_tagged(node, sys.argv[3])
     elif sys.argv[1] == 'nearest_node':
-        nearest_node(int(sys.argv[2]))
+        nearest_node(node)
     elif sys.argv[1] == 'farthest_node':
-        farthest_node(int(sys.argv[2]))
+        farthest_node(node)
