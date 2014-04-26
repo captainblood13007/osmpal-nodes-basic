@@ -3,8 +3,8 @@ import sys
 import os
 sys.path.append('ENTER folder location for pyosm.py and geocoder.py here. e.g. /home/peter/osmnodes/lib/ or in Windows...C:\\osmnodes\\lib')
 import pyosm
-osm = pyosm.OSMXMLFile('ENTER location of your .osm data file here. e.g. /home/peter/osmnodes/new-york-small.osm, or in Windows...C:\\osmnodes\\new-york-small.osm')
 import re
+osm = pyosm.OSMXMLFile('ENTER location of your .osm data file here. e.g. /home/peter/osmnodes/new-york-small.osm, or in Windows...C:\\osmnodes\\new-york-small.osm')
 
 '''Geocodes a user entered address and returns a node for processing by osmpalnodesgraph.py
 or by osmpalnodesbasic.py. Geocoder will match for query in the following priority: 1. house number and street name '''
