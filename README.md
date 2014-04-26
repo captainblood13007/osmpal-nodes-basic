@@ -34,7 +34,7 @@ Note: You can only download small .osm map sections in JOSM because  the Openstr
 
     In your command line, ***IF YOU KNOW A NODE NUMBER TO PROCESS***, use any of the following commands:
     
-    python osmpalnodesbasic.py nearest_node_tagged 246512355 $'amenity\': u\'cafe'    #Prints the cafe nearest to node 246512355   You can enter your own OpenStreetmap node number instead of  246512355. 'cafe' can be replaced with another Openstreetmap amenity such as 'pub', 'restaurant', 'university', 'school', etc.     ***In Windows, type: *** python osmpalnodesbasic.py nearest_node_tagged "870 broadway" "amenity\': u\'cafe"  ***Note that commands below are examples Linux/Mac command line. To run in Windows, simply change the $'' to double quotes to wrap the parameters ""***
+    python osmpalnodesbasic.py nearest_node_tagged 246512355 $'amenity\': u\'cafe'    #Prints the cafe nearest to node 246512355   You can enter your own OpenStreetmap node number instead of  246512355. 'cafe' can be replaced with another Openstreetmap amenity such as 'pub', 'restaurant', 'university', 'school', etc.     ***In Windows, type: *** python osmpalnodesbasic.py nearest_node_tagged "870 broadway" "amenity\': u\'cafe"  ***Note that commands below are examples Linux/Mac command line. To run in Windows, simply change the $' ' to double quotes to wrap the parameters " "***
    
     python osmpalnodesbasic.py farthest_node_tagged 246512355 $'amenity\': u\'cafe'    #Prints and graphs the cafe farthest from node 246512355 (within the bounding area of the .osm file being used).  To call in Windows, type: python osmpalnodesbasic.py farthest_node_tagged 246512355 "amenity\': u\'cafe" 
    
