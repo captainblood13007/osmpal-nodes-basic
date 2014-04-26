@@ -1,13 +1,11 @@
 #!/usr/bin/python
 import sys
 import os
-PYOSM_DIR = os.path.join(os.path.dirname(__file__), 'ENTER THE DIRECTORY LOCATION OF THE PYOSM FILE HERE, e.g. /home/peter/osmpal/lib/')
-sys.path.append(PYOSM_DIR)
+sys.path.append('ENTER folder location for pyosm.py and geocoder.py here. e.g. /home/peter/osmnodes/lib/ or in Windows... C:\\osmnodes\\lib')
 import pyosm
-osm = pyosm.OSMXMLFile('ENTER THE LOCATION OF THE OPENSTREETMAP .OSM FILE HERE, e.g. /home/peter/osmpal/new-york-small.osm')
-import re
-sys.path.insert(0, 'ENTER THE LIB DIRECTORY LOCATION. This will be the folder location containing pyosm.py and geocoder.py files , e.g. /home/peter/osmpal/lib/')
 from geocoder import geocode_node
+osm = pyosm.OSMXMLFile('ENTER location of your .osm data file here. e.g. /home/peter/osmnodes/new-york-small.osm, or in Windows... C:\\osmnodes\\new-york-small.osm')
+import re
 
 def dist(x1,y1,x2,y2):
     return ((x2-x1)**2+(y2-y1)**2)**0.5
@@ -22,15 +20,15 @@ def nearest_node_tagged(nodeID, qry):
         #arbitrarily large starting distance for comparison
         nearestDist = 100
         for Nid in osm.nodes:
-            match = re.search('\''+qry+'(.*)', str(osm.nodes[Nid]['tags']))
+            match = re.search('\''+qry+'(.*)', str(osm.nodes[Nid].tags))
             newDist = dist(X1, Y1, osm.nodes[Nid]['lon'], osm.nodes[Nid]['lat'])
             if match and newDist < nearestDist and Nid is not originalNode:
                 nearestDist = newDist
                 nearestNode = Nid
                 nearestTag = match.group(1)
         print 'Nearest Distance (not to scale) is: ', nearestDist
-        print '\n Nearest Node for your query is http://www.openstreetmap.org/node/'+nearestNode
-        print '\n Nearest tagged node is: http://www.openstreetmap.org/node/'+nearestTag
+        print '\n Nearest tagged node for your query is http://www.openstreetmap.org/node/'+str(nearestNode)
+        print '\n Nearest node\'s tagged info is:', nearestTag
     except:
         e = sys.exc_info()[0]
         l = sys.exc_traceback.tb_lineno
@@ -46,7 +44,7 @@ def farthest_node_tagged(nodeID, qry):
         #arbitrarily small starting distance for comparison
         farthestDist = 0
         for Nid in osm.nodes:
-            match = re.search('\''+qry+'(.*)', str(osm.nodes[Nid]['tags']))
+            match = re.search('\''+qry+'(.*)', str(osm.nodes[Nid].tags))
             newDist = dist(X1, Y1, osm.nodes[Nid]['lon'], osm.nodes[Nid]['lat'])
             if match and newDist > farthestDist and Nid is not originalNode:
                 farthestDist = newDist
@@ -54,8 +52,8 @@ def farthest_node_tagged(nodeID, qry):
                 farthestTag = match.group(1)
                 XFAR = osm.nodes[farthestNode]['lon']
                 YFAR = osm.nodes[farthestNode]['lat']
-        print '\n Farthest Node for your query is node number: ', farthestNode
-        print '\n Farthest tagged node is: ', farthestTag
+        print '\n Farthest Node for your query is http://www.openstreetmap.org/node/'+str(farthestNode)
+        print '\n Farthest node\'s tagged info: ', farthestTag
     except:
         e = sys.exc_info()[0]
         l = sys.exc_traceback.tb_lineno
@@ -79,7 +77,7 @@ def farthest_node(nodeID):
                 farthestDist = newDist
                 farthestNode = Nid
         if originalNode is not None:
-            print '\n Farthest Node number is: ', farthestNode
+            print '\n Farthest Node is http://www.openstreetmap.org/node/'+str(farthestNode)
             print '\n Farthest Distance calculated (not to scale) from your original node is : ', farthestDist
             XFAR = osm.nodes[farthestNode]['lon']
             YFAR = osm.nodes[farthestNode]['lat']
@@ -105,7 +103,7 @@ def nearest_node(nodeID):
                 nearestDist = newDist
                 nearestNode = Nid
         if originalNode is not None:
-            print '\n Nearest Node number is: ', nearestNode
+            print '\n Nearest Node is http://www.openstreetmap.org/node/'+str(nearestNode)
             print '\n Nearest Distance calculated (not to scale): ', nearestDist
             XNEAR = osm.nodes[nearestNode]['lon']
             YNEAR = osm.nodes[nearestNode]['lat']
