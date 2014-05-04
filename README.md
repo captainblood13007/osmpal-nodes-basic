@@ -15,7 +15,7 @@ This is the basic text-only version. If you want a graphical tool to compare Ope
 Installation:
 =============
 
-1.  Download the code with your web browser or git clone https://github.com/developingcountries/osmpal-nodes-basic/
+1.  Use your web browser to copy the code from each file or use the git program, i.e. git clone https://github.com/developingcountries/osmpal-nodes-basic/
 
 2.  Use a text editor to edit line 4 in the file osmpalnodesbasic.py file so that the sys.path.append statement points to the correct folder location for pyosm.py and geocoder.py, e.g. /home/peter/osmpal/lib/ or in Windows... C:\ \osmpal\ \lib'  ALSO, use your text editor to edit line 4 in the file geocoder.py  Line 4 SHOULD POINT TO THE FOLDER LOCATION OF the pyosm.py library file, e.g. '/home/peter/osmpal/lib/'.
 
