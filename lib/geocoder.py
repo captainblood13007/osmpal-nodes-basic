@@ -1,10 +1,10 @@
 #!/usr/bin/python
 import sys
 import os
-sys.path.append('ENTER folder location for pyosm.py and geocoder.py here. e.g. /home/peter/osmnodes/lib/ or in Windows...C:\\osmnodes\\lib')
+sys.path.append('Enter the directory containing the pyosm.py file, e.g. /home/peter/osmnodes/lib or in windows c:\\osmnodes\\lib')
 import pyosm
 import re
-osm = pyosm.OSMXMLFile('ENTER location of your .osm data file here. e.g. /home/peter/osmnodes/new-york-small.osm, or in Windows...C:\\osmnodes\\new-york-small.osm')
+osm = pyosm.OSMXMLFile('Enter the location of your .osm file, e.g. /home/peter/osmnodes/new-york-small.osm or in Windows c:\\osmnodes\\new-york-small.osm')
 
 '''Geocodes a user entered address and returns a node for processing by osmpalnodesgraph.py
 or by osmpalnodesbasic.py. Geocoder will match for query in the following priority: 1. house number and street name '''
@@ -17,12 +17,12 @@ def check_house_number_and_street(queryString):
         checkHouseTag = re.search(('addr:housenumber'),str(osm.nodes[Nid].tags).lower())
         houseTagContents = re.search('addr:housenumber\': u\'(.*?)\'', str(osm.nodes[Nid].tags).lower())
         if houseTagContents:
-            houseQuery = re.search(str(houseTagContents.group(1)), queryString)
+            houseQuery = re.search(str(houseTagContents.group(1)).lower(), queryString)
             if checkHouseTag and houseTagContents and houseQuery:
                 checkStreetTag = re.search(('addr:street'),str(osm.nodes[Nid].tags).lower())
                 streetTagContents = re.search('addr:street\': u\'(.*?)\'', str(osm.nodes[Nid].tags).lower())
                 if streetTagContents:
-                    streetQuery = re.search(str(streetTagContents.group(1)), queryString)
+                    streetQuery = re.search(str(streetTagContents.group(1)).lower(), queryString.lower())
                     if checkStreetTag and streetTagContents and streetQuery:
                         #return osm.nodes[Nid]['id']
                         return osm.nodes[Nid]['id']
@@ -40,8 +40,8 @@ def check_postcode_and_city(queryString):
                 checkCityTag = re.search(('addr:city'),str(osm.nodes[Nid].tags).lower())
                 cityTagContents = re.search('addr:city\': u\'(.*?)\'', str(osm.nodes[Nid].tags).lower())
                 if cityTagContents:
-                    streetQuery = re.search(str(cityTagContents.group(1)), queryString)
-                    if checkCityTag and cityTagContents and streetQuery:
+                    cityQuery = re.search(str(cityTagContents.group(1)).lower(), queryString.lower())
+                    if checkCityTag and cityTagContents and cityQuery:
                         #return osm.nodes[Nid]['id']
                         return osm.nodes[Nid]['id']
 
