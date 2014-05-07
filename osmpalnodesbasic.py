@@ -27,6 +27,7 @@ def nearest_node_tagged(nodeID, qry):
                 nearestNode = Nid
                 nearestTag = match.group(1)
         print 'Nearest Distance (not to scale) is: ', nearestDist
+        print '\n Your starting node is http://www.openstreetmap.org/node/'+str(originalNode)
         print '\n Nearest tagged node for your query is http://www.openstreetmap.org/node/'+str(nearestNode)
         print '\n Nearest node\'s tagged info is:', nearestTag
     except:
@@ -52,6 +53,7 @@ def farthest_node_tagged(nodeID, qry):
                 farthestTag = match.group(1)
                 XFAR = osm.nodes[farthestNode]['lon']
                 YFAR = osm.nodes[farthestNode]['lat']
+        print '\n Your starting node is http://www.openstreetmap.org/node/'+str(originalNode)        
         print '\n Farthest Node for your query is http://www.openstreetmap.org/node/'+str(farthestNode)
         print '\n Farthest node\'s tagged info: ', farthestTag
     except:
@@ -77,6 +79,7 @@ def farthest_node(nodeID):
                 farthestDist = newDist
                 farthestNode = Nid
         if originalNode is not None:
+            print '\n Your starting node is http://www.openstreetmap.org/node/'+str(originalNode)
             print '\n Farthest Node is http://www.openstreetmap.org/node/'+str(farthestNode)
             print '\n Farthest Distance calculated (not to scale) from your original node is : ', farthestDist
             XFAR = osm.nodes[farthestNode]['lon']
@@ -103,6 +106,7 @@ def nearest_node(nodeID):
                 nearestDist = newDist
                 nearestNode = Nid
         if originalNode is not None:
+            print '\n Your starting node is http://www.openstreetmap.org/node/'+str(originalNode)
             print '\n Nearest Node is http://www.openstreetmap.org/node/'+str(nearestNode)
             print '\n Nearest Distance calculated (not to scale): ', nearestDist
             XNEAR = osm.nodes[nearestNode]['lon']
