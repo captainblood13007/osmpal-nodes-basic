@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# Geocoder program created by Peter Chin, May, 2014. peter.chin@redcross.ca, Open Source license pending
 import sys
 import os
 sys.path.append('Enter the directory containing the pyosm.py file, e.g. /home/peter/osmnodes/lib or in windows c:\\osmnodes\\lib')
