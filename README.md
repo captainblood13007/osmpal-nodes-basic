@@ -25,7 +25,7 @@ Once JOSM is running, click on the button that says download map data from OSM s
    Note: You can only download small .osm map sections in JOSM because  the OpenstreetMap api will limit the map area you can download. When you have your .osm file, use your text editor and edit Line 8 of the osmpalnodesbasic.py file AND ALSO EDIT Line 8 of the geocoder.py file with the location of the .osm map data file, e.g. osm = pyosm.OSMXMLFile('/home/peter/osmpal/new-york-small.osm', or in Windows... C:\ \osmpal\ \new-york-small.osm)
     
 
-4.  Run this tool and check for the nearest or farthest point of interest. Using our new-york-osm.osm example file, to get the nearest tagged node to Union square, New York City, go into the command line and  CHANGE TO THE DIRECTORY THAT CONTAINS THE FILES and type: python osmpalnodesgraph.py nearest_node_tagged 246512355 $'amenity\': u\'cafe'  It will then return the cafe nearest to node number 246512355, which is a node in Union Square in New York City.   Other amenity possbilites for checking other points of interest include using 'restaurant', 'school', or 'pub' instead of 'cafe'.   Consult http://wiki.openstreetmap.org/wiki/Category:En:Key:amenity for a complete list of amenity nodes that you can search. Instead of searching for an amenity tag, you can also search for a tag such as leisure, tourism, sport or historic.
+4.  Run this tool and check for the nearest or farthest point of interest. Using our new-york-osm.osm example file, to get the nearest tagged node to Union square, New York City, go into the command line and  CHANGE TO THE DIRECTORY THAT CONTAINS THE FILES and type: python osmpalnodesbasic.py nearest_node_tagged 246512355 $'amenity\': u\'cafe'  It will then return the cafe nearest to node number 246512355, which is a node in Union Square in New York City.   Other amenity possbilites for checking other points of interest include using 'restaurant', 'school', or 'pub' instead of 'cafe'.   Consult http://wiki.openstreetmap.org/wiki/Category:En:Key:amenity for a complete list of amenity nodes that you can search. Instead of searching for an amenity tag, you can also search for a tag such as leisure, tourism, sport or historic.
 
 5.  You can also use the geocoder to process a node. For example, you want to find the coffee shop nearest to 870 Broadway in New York City, in python command line, In Linux or Mac command line, you would enter python osmpalnodesbasic.py nearest_node_tagged $'870 broadway' $'amenity\': u\'cafe'  In Windows, you would use " " quotes, and type: python osmpalnodesbasic.py nearest_node_tagged "870 broadway" "amenity\': u\'cafe"
     
@@ -46,19 +46,19 @@ Once JOSM is running, click on the button that says download map data from OSM s
    
    ***IF YOU WANT TO GEOCODE AN ADDRESS***, use any of the following commands: 
    
-   python osmpalnodesbasic.py nearest_node_tagged $'union square' $'amenity\': u\'cafe'   #Outputs and graphs the cafe that's nearest any point in Union Square. The geocoder provides a point in Union Square using just the landmark name of Union Square.
+   python osmpalnodesbasic.py nearest_node_tagged $'union square' $'amenity\': u\'cafe'   #Outputs the cafe that's nearest any point in Union Square. The geocoder provides a point in Union Square using just the landmark name of Union Square.
    
-   python osmpalnodesbasic.py nearest_node_tagged $'870 broadway' $'amenity\': u\'cafe'    #Outputs and graphs the cafe that's nearest any point at 870 Broadway in New York, using the street address and street name combination from geocoder.py
+   python osmpalnodesbasic.py nearest_node_tagged $'870 broadway' $'amenity\': u\'cafe'    #Outputs the cafe that's nearest any point at 870 Broadway in New York, using the street address and street name combination from geocoder.py
    
-   python osmpalnodesbasic.py nearest_node_tagged $'10010 new york' $'amenity\': u\'cafe'   #Outputs and graphs the cafe that's nearest any point at the 10010 zip code, using the zip code/postal code and city combination in the geocoder.
+   python osmpalnodesbasic.py nearest_node_tagged $'10010 new york' $'amenity\': u\'cafe'   #Outputs the cafe that's nearest any point at the 10010 zip code, using the zip code/postal code and city combination in the geocoder.
    
-   python osmpalnodesbasic.py nearest_node_tagged $'mcdonald\'s' $'amenity\': u\'cafe'    #Outputs and graphs the cafe that's nearest to a one word location such as mcdonald's restaurant.
+   python osmpalnodesbasic.py nearest_node_tagged $'mcdonald\'s' $'amenity\': u\'hospital'    #Outputs the hospital that's nearest to a one word location such as mcdonald's restaurant.
 
    Many other possible combinations: 
    
-   python osmpalnodesbasic.py farthest_node_tagged $'mcdonald\'s' $'amenity\': u\'cafe'    #Outputs and graphs the cafe that's farthest away from a one word location such as mcdonald's restaurant.
+   python osmpalnodesbasic.py farthest_node_tagged $'mcdonald\'s' $'amenity\': u\'cafe'    #Outputs the cafe that's farthest away from a one word location such as mcdonald's restaurant.
    
-   python osmpalnodesbasic.py nearest_node $'870 broadway'  #Outputs and graphs any generic point that's nearest to the geocoded point at 870 broadway in New York City.
+   python osmpalnodesbasic.py nearest_node $'870 broadway'  #Outputs any generic point that's nearest to the geocoded point at 870 broadway in New York City.
    
    If you want to map out the node that was received, just copy the URL outputted in the command line. It will provide an Openstreetmap web link for you to see the node, e.g. http://www.openstreetmap.org/node/1740966205  You can also use the JOSM program (from step 4) or the OpenStreetMap website to find other nodes that you want to analyze, or simply enter an address for geocoding. 
 
