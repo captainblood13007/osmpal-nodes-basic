@@ -2,10 +2,10 @@
 # Program created by Peter Chin, May, 2014. peter.chin@redcross.ca, Open Source license pending
 import sys
 import os
-sys.path.append('C:\\osmcleanup\\lib')
+sys.path.append('ENTER folder location for pyosm.py and geocoder.py here. e.g. /home/peter/osmnodes/lib/ or in Windows... C:\\osmnodes\\lib')
 import pyosm
 from geocoder import geocode_node
-osm = pyosm.OSMXMLFile('c:\\osmcleanup\\new-york-small.osm')
+osm = pyosm.OSMXMLFile('ENTER location of your .osm data file here. e.g. /home/peter/osmnodes/new-york-small.osm, or in Windows... C:\\osmnodes\\new-york-small.osm')
 import re
 
 def distance_nodes(x1,y1,x2,y2):
