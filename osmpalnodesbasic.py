@@ -2,35 +2,29 @@
 # Program created by Peter Chin, May, 2014. peter.chin@redcross.ca, Open Source license pending
 import sys
 import os
-sys.path.append('ENTER folder location for pyosm.py and geocoder.py here. e.g. /home/peter/osmnodes/lib/ or in Windows... C:\\osmnodes\\lib')
+sys.path.append('C:\\osmcleanup\\lib')
 import pyosm
 from geocoder import geocode_node
-osm = pyosm.OSMXMLFile('ENTER location of your .osm data file here. e.g. /home/peter/osmnodes/new-york-small.osm, or in Windows... C:\\osmnodes\\new-york-small.osm')
+osm = pyosm.OSMXMLFile('c:\\osmcleanup\\new-york-small.osm')
 import re
 
-def dist(x1,y1,x2,y2):
+def distance_nodes(x1,y1,x2,y2):
     return ((x2-x1)**2+(y2-y1)**2)**0.5
-
+	
 def nearest_node_tagged(nodeID, qry):
     try:
-        for Nid in osm.nodes:
-            if osm.nodes[Nid]['id'] == nodeID:
-                X1 = osm.nodes[Nid]['lon']
-                Y1 = osm.nodes[Nid]['lat']
-                originalNode = Nid
         #arbitrarily large starting distance for comparison
-        nearestDist = 100
-        for Nid in osm.nodes:
-            match = re.search('\''+qry+'(.*)', str(osm.nodes[Nid].tags))
-            newDist = dist(X1, Y1, osm.nodes[Nid]['lon'], osm.nodes[Nid]['lat'])
-            if match and newDist < nearestDist and Nid is not originalNode:
+        nearestDist = 100000000
+        for node in osm.nodes:
+            match = re.search('\''+qry+'(.*)', str(osm.nodes[node].tags))
+            newDist = distance_nodes(osm.nodes[nodeID]['lon'], osm.nodes[nodeID]['lat'], osm.nodes[node]['lon'], osm.nodes[node]['lat'])
+            if match and newDist < nearestDist and node != nodeID:
                 nearestDist = newDist
-                nearestNode = Nid
+                nearestNode = node
                 nearestTag = match.group(1)
-        print 'Nearest Distance (not to scale) is: ', nearestDist
-        print '\n Your starting node is http://www.openstreetmap.org/node/'+str(originalNode)
+        print '\n Your starting node is http://www.openstreetmap.org/node/'+str(nodeID)
         print '\n Nearest tagged node for your query is http://www.openstreetmap.org/node/'+str(nearestNode)
-        print '\n Nearest node\'s tagged info is:', nearestTag
+        print '\n Nearest node\'s tagged info is:'+str(nearestTag)
     except:
         e = sys.exc_info()[0]
         l = sys.exc_traceback.tb_lineno
@@ -38,80 +32,49 @@ def nearest_node_tagged(nodeID, qry):
 
 def farthest_node_tagged(nodeID, qry):
     try:
-        for Nid in osm.nodes:
-            if osm.nodes[Nid]['id'] == nodeID:
-                X1 = osm.nodes[Nid]['lon']
-                Y1 = osm.nodes[Nid]['lat']
-                originalNode = Nid
         #arbitrarily small starting distance for comparison
         farthestDist = 0
-        for Nid in osm.nodes:
-            match = re.search('\''+qry+'(.*)', str(osm.nodes[Nid].tags))
-            newDist = dist(X1, Y1, osm.nodes[Nid]['lon'], osm.nodes[Nid]['lat'])
-            if match and newDist > farthestDist and Nid is not originalNode:
+        for node in osm.nodes:
+            match = re.search('\''+qry+'(.*)', str(osm.nodes[node].tags))
+            newDist = distance_nodes(osm.nodes[nodeID]['lon'], osm.nodes[nodeID]['lat'], osm.nodes[node]['lon'], osm.nodes[node]['lat'])
+            if match and newDist > farthestDist and node != nodeID:
                 farthestDist = newDist
-                farthestNode = Nid
+                farthestNode = node
                 farthestTag = match.group(1)
-                XFAR = osm.nodes[farthestNode]['lon']
-                YFAR = osm.nodes[farthestNode]['lat']
-        print '\n Your starting node is http://www.openstreetmap.org/node/'+str(originalNode)        
+        print '\n Your starting node is http://www.openstreetmap.org/node/'+str(nodeID)
         print '\n Farthest Node for your query is http://www.openstreetmap.org/node/'+str(farthestNode)
-        print '\n Farthest node\'s tagged info: ', farthestTag
+        print '\n Farthest node\'s tagged info: '+str(farthestTag)
     except:
         e = sys.exc_info()[0]
         l = sys.exc_traceback.tb_lineno
         print 'The following error ocurred: ', e, l
 
 def farthest_node(nodeID):
-    #First loop through to get coordinates
-    for nid in osm.nodes:
-        if osm.nodes[nid]['id'] == nodeID:
-            X1 = osm.nodes[nid]['lon']
-            Y1 = osm.nodes[nid]['lat']
-            originalNode = nid
-            print '\n Your original node number is: ', originalNode
-    #Arbitrarily small number that variable newDist will be bigger than in comparison below
     farthestDist = 0
-    #Second loop through to calculate distance
     try:
-        for Nid in osm.nodes:
-            newDist = dist(X1, Y1, osm.nodes[Nid]['lon'], osm.nodes[Nid]['lat'])
-            if newDist > farthestDist and Nid is not originalNode:
+        for node in osm.nodes:
+            newDist = distance_nodes(osm.nodes[nodeID]['lon'], osm.nodes[nodeID]['lat'], osm.nodes[node]['lon'], osm.nodes[node]['lat'])
+            if newDist > farthestDist and node != nodeID:
                 farthestDist = newDist
-                farthestNode = Nid
-        if originalNode is not None:
-            print '\n Your starting node is http://www.openstreetmap.org/node/'+str(originalNode)
-            print '\n Farthest Node is http://www.openstreetmap.org/node/'+str(farthestNode)
-            print '\n Farthest Distance calculated (not to scale) from your original node is : ', farthestDist
-            XFAR = osm.nodes[farthestNode]['lon']
-            YFAR = osm.nodes[farthestNode]['lat']
+                farthestNode = node
+        print '\n Your starting node is http://www.openstreetmap.org/node/'+str(nodeID)
+        print '\n Farthest Node is http://www.openstreetmap.org/node/'+str(farthestNode)
     except:
         e = sys.exc_info()[0]
         l = sys.exc_traceback.tb_lineno
         print 'The following error ocurred: ', e, l
 
 def nearest_node(nodeID):
-    #Need to loop through to get coordinates
-    for nid in osm.nodes:
-        if osm.nodes[nid]['id'] == nodeID:
-            X1 = osm.nodes[nid]['lon']
-            Y1 = osm.nodes[nid]['lat']
-            originalNode = nid
-            print '\n Your original node (starting node) number is :', originalNode
     # Start with arbitrarily large nearestDist and get smaller and smaller distance
-    nearestDist = 10000
+    nearestDist = 100000000
     try:
-        for Nid in osm.nodes:
-            newDist = dist(X1, Y1, osm.nodes[Nid]['lon'], osm.nodes[Nid]['lat'])
-            if newDist < nearestDist and Nid is not originalNode:
+        for node in osm.nodes:
+            newDist = distance_nodes(osm.nodes[nodeID]['lon'], osm.nodes[nodeID]['lat'], osm.nodes[node]['lon'], osm.nodes[node]['lat'])
+            if newDist < nearestDist and node != nodeID:
                 nearestDist = newDist
-                nearestNode = Nid
-        if originalNode is not None:
-            print '\n Your starting node is http://www.openstreetmap.org/node/'+str(originalNode)
-            print '\n Nearest Node is http://www.openstreetmap.org/node/'+str(nearestNode)
-            print '\n Nearest Distance calculated (not to scale): ', nearestDist
-            XNEAR = osm.nodes[nearestNode]['lon']
-            YNEAR = osm.nodes[nearestNode]['lat']
+                nearestNode = node
+        print '\n Your starting node is http://www.openstreetmap.org/node/'+str(nodeID)
+        print '\n Nearest Node is http://www.openstreetmap.org/node/'+str(nearestNode)
     except:
         e = sys.exc_info()[0]
         l = sys.exc_traceback.tb_lineno
