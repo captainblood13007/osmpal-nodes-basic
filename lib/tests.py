@@ -6,28 +6,28 @@ import geocoder
 
 class TestGeocoder(unittest.TestCase):
 
-    def test_check_house_number_and_street_correct_result(self):
-        result = geocoder.check_house_number_and_street('722 broadway')
+    def test_match_house_number_and_street_correct_result(self):
+        result = geocoder.match_house_number_and_street('722 broadway')
         self.assertIsInstance(result, int)
 
-    def test_check_house_number_and_street_wrong_result(self):
-        result = geocoder.check_house_number_and_street('aabbccxxyyzz')
+    def test_match_house_number_and_street_wrong_result(self):
+        result = geocoder.match_house_number_and_street('aabbccxxyyzz')
         self.assertNotIsInstance(result, int)
 
-    def test_check_postcode_and_city_correct_result(self):
-        result = geocoder.check_postcode_and_city('10010 new york')
+    def test_match_postcode_and_city_correct_result(self):
+        result = geocoder.match_postcode_and_city('10010 new york')
         self.assertIsInstance(result, int)
 
-    def test_check_postcode_and_city_wrong_result(self):
-        result = geocoder.check_postcode_and_city('1122334455667788')
+    def test_match_postcode_and_city_wrong_result(self):
+        result = geocoder.match_postcode_and_city('1122334455667788')
         self.assertNotIsInstance(result, int)
 
-    def test_check_site_name_correct_result(self):
-        result = geocoder.check_site_name('starbucks')
+    def test_match_site_name_correct_result(self):
+        result = geocoder.match_site_name('starbucks')
         self.assertIsInstance(result, int)
 
-    def test_check_site_name_wrong_result(self):
-        result = geocoder.check_site_name('lsdjflsdjdksfj')
+    def test_match_site_name_wrong_result(self):
+        result = geocoder.match_site_name('lsdjflsdjdksfj')
         self.assertNotIsInstance(result, int)
 
     def test_geocode_node_space_in_query(self):
